@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
-
+var db = require('./models');
+var Card = db.Card;
 
 var app = express();
 app.set('port', (process.env.PORT || 3000));
@@ -23,17 +24,18 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/api/comments', function(req, res) {
-  fs.readFile(COMMENTS_FILE, function (err, data) {
-    if(err) {
+app.get('/api/cards', function(req, res) {
+  Card.findAll()
+    .then(function (cards) {
+      res.render('cards', {json: cards});
+    })
+    .catch(function (err) {
       console.error(err);
-      process.exit(1);
-    }
-    res.json(JSON.parse(data));
-  });
+      res.send(err);
+    });
 });
 
-app.post('/api/comments', function (req, res) {
+app.post('/api/cards', function (req, res) {
   fs.readFile(COMMENTS_FILE, function (err, data) {
     if(err) {
       console.error(err);
@@ -54,6 +56,8 @@ app.post('/api/comments', function (req, res) {
     });
   });
 });
+
 var server = app.listen(app.get('port'), function () {
+  db.sequelize.sync();
   console.log("Server listening on port %s", server.address().port);
 });

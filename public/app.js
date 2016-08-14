@@ -136,6 +136,6 @@ const CommentBox = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url = "/api/comments" pollInterval = {2000}/>,
+  <CommentBox url = "/api/cards" pollInterval = {2000}/>,
   document.getElementById('app')
 );
