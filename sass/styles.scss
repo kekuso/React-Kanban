@@ -1,0 +1,44 @@
+// Resets, clearfix
+@import "sass/partials/_reset.scss";
+@import "sass/partials/_clearfix.scss";
+
+
+// media query ranges
+
+$small: "only screen and (min-width: 200px) and (max-width: 650px)";
+$large: "only screen and (min-width: 1000px)";
+
+// Mixins
+@mixin small {
+  @media #{$small} {
+    @content;
+  }
+}
+@mixin large {
+  @media #{$large} {
+    @content;
+  }
+}
+
+//
+
+
+h1 {
+  font-size: 50px;
+}
+
+.toDoContainer {
+  max-width: 33vw;
+}
+
+.doingContainer {
+  max-width: 33vw;
+}
+
+.doneContainer {
+  max-width: 33vw;
+}
+.card {
+  display: inline-block;
+  border: 1px solid black;
+}

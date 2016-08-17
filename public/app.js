@@ -1,94 +1,59 @@
-const CommentForm = React.createClass({
-  getInitialState: function() {
-    return {author: '', text: ''};
-  },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function (e) {
-    e.preventDefault();
-    let author = this.state.author.trim();
-    let text = this.state.text.trim();
-    if (!text || !author) {
-      return;
-    }
-    this.props.onCommentSubmit( {author: author, text: text});
-    this.setState({author: '', text: ''});
-  },
-  render: function() {
-    return (
-      <form className = "commentForm" onSubmit={this.handleSubmit}>
-         <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
-        <input
-          type="text"
-          placeholder="Say something..."
-          onChange={this.handleTextChange}
-        />
-        <input type="submit" value="Post" />
-      </form>
-    );
-  }
-});
-
-const Comment = React.createClass({
+const Card = React.createClass({
   rawMarkup: function () {
     let md = new Remarkable();
     const rawMarkup = md.render(this.props.children.toString());
     return { __html: rawMarkup };
   },
   render: function() {
+    var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
     return (
-      <div className = "comment">
-        <h2 className = "commentAuthor">
-          {this.props.author}
+      <div className = "card" style = {{backgroundColor: randomColor}}>
+        <h2 className = "cardTitle">
+          Title: {this.props.title}
         </h2>
-        <span
-          dangerouslySetInnerHTML={ this.rawMarkup() }
-        />
+        <h3 className = "cardAuthor">
+          Author: {this.props.author}
+        </h3>
+        <p className = "cardStatus" style = {{color: 'green'}}>
+          Status: {this.props.status}
+        </p>
+        <p className = "cardPriority" style = {{color: 'red'}}>
+          Priority: {this.props.priority}
+        </p>
+        <p className = "cardAssignedTo">
+          Assigned to: {this.props.assignedTo}
+        </p>
+        <br />
       </div>
     );
   }
 });
 
-const data = [
-  {
-    author: "Tony",
-    text: "Wow, so awesome"
-  },
-  {
-    author: "Jesse",
-    text: "Iknowrite"
-  }];
-
-const CommentList = React.createClass({
+const CardList = React.createClass({
   render: function() {
-    const commentNodes = this.props.data.map(function(comment, index) {
+    const cardNodes = this.props.data.map(function(card, index) {
       return (
-        <Comment
+        <Card
           key = {index}
-          author = {comment.author}>
-          {comment.text}
-        </Comment>
+          author = {card.createdBy}
+          title = {card.title}
+          status = {card.status}
+          priority = {card.priority}
+          assignedTo = {card.assignedTo}
+          >
+        </Card>
       );
     })
     return (
-      <div className = "commentList">
-        { commentNodes.reverse() }
+      <div className = "cardList">
+        { cardNodes}
       </div>
     );
   }
 });
 
-const CommentBox = React.createClass({
-  loadCommentsFromServer: function () {
+const CardContainer = React.createClass({
+  loadCardsFromServer: function () {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -101,12 +66,12 @@ const CommentBox = React.createClass({
       }.bind(this)
     });
   },
-  handleCommentSubmit: function (comment) {
+  handleCardSubmit: function (card) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
-      data: comment,
+      data: card,
       success: function (data) {
         this.setState({data: data});
       }.bind(this),
@@ -119,23 +84,22 @@ const CommentBox = React.createClass({
     return {data: []}
   },
   componentDidMount: function () {
-    this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    this.loadCardsFromServer();
+    //setInterval(this.loadCardsFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList
+      <div className="cardContainer">
+        <h1>Kanban</h1>
+        <CardList
           data = { this.state.data }
         />
-        <CommentForm onCommentSubmit={ this.handleCommentSubmit}/>
       </div>
     );
   }
 });
 
 ReactDOM.render(
-  <CommentBox url = "/api/cards" pollInterval = {2000}/>,
+  <CardContainer url = "/api/comments" pollInterval = {2000}/>,
   document.getElementById('app')
 );

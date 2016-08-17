@@ -27,7 +27,10 @@ app.use(function(req, res, next) {
 app.get('/api/cards', function(req, res) {
   Card.findAll()
     .then(function (cards) {
-      res.render('cards', {json: cards});
+      // var json = JSON.stringify(cards[2].createdBy);
+      // console.log(cards[0].priority);
+      // res.json(JSON.parse(json));
+      res.json(cards);
     })
     .catch(function (err) {
       console.error(err);
