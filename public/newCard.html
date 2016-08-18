@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create New Card</title>
+</head>
+<body>
+  <h1>Create New Kanban Card</h1>
+  <form action = "/api/cards" method = "POST">
+    <div>
+      Title
+      <input type="text" name="title">
+    </div>
+    <div>
+      Priority
+      <input type="text" name="priority">
+    </div>
+    <div>
+      Created by
+      <input type="text" name="createdBy">
+    </div>
+    <div>
+      Assigned to
+      <input type="text" name="assignedTo">
+    </div>
+    <button type="submit" class="submitButton">
+      Submit new task
+    </button>
+  </form>
+</body>
+</html>

@@ -144,6 +144,7 @@ const CardContainer = React.createClass({
     return (
       <div className="cardContainer">
         <h1>Kanban</h1>
+        <a className="createCardButton" href="./newCard.html">Create New</a>
         <div className = "columnTitles">
           <div className = "toDoContainer">
             <h2>To Do</h2>
