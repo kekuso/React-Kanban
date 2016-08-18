@@ -67,15 +67,41 @@ table {
 h1 {
   font-size: 50px; }
 
+.columnTitles {
+  font-size: 30px;
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center; }
+
 .toDoContainer {
-  max-width: 33vw; }
+  box-sizing: border-box;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+  flex: 1 1 calc(90%/3); }
 
 .doingContainer {
-  max-width: 33vw; }
+  box-sizing: border-box;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+  flex: 1 1 calc(90%/3); }
 
 .doneContainer {
-  max-width: 33vw; }
+  box-sizing: border-box;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+  flex: 1 1 calc(90%/3); }
 
 .card {
-  display: inline-block;
-  border: 1px solid black; }
+  display: block;
+  border: 1px solid black;
+  width: 50%;
+  text-align: center;
+  font-size: 24px;
+  margin: 0 auto;
+  margin-bottom: 5px; }

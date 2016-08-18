@@ -29,24 +29,76 @@ const Card = React.createClass({
   }
 });
 
-const CardList = React.createClass({
+const ToDoList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
-      return (
-        <Card
-          key = {index}
-          author = {card.createdBy}
-          title = {card.title}
-          status = {card.status}
-          priority = {card.priority}
-          assignedTo = {card.assignedTo}
-          >
-        </Card>
-      );
+      if(card.status === 'Queue') {
+        return (
+          <Card
+            key = {index}
+            author = {card.createdBy}
+            title = {card.title}
+            status = {card.status}
+            priority = {card.priority}
+            assignedTo = {card.assignedTo}
+            >
+          </Card>
+        );
+      }
     })
     return (
-      <div className = "cardList">
-        { cardNodes}
+      <div className = "toDoList">
+        { cardNodes }
+      </div>
+    );
+  }
+});
+
+const DoingList = React.createClass({
+  render: function() {
+    const cardNodes = this.props.data.map(function(card, index) {
+      if(card.status === 'In Progress') {
+        return (
+          <Card
+            key = {index}
+            author = {card.createdBy}
+            title = {card.title}
+            status = {card.status}
+            priority = {card.priority}
+            assignedTo = {card.assignedTo}
+            >
+          </Card>
+        );
+      }
+    })
+    return (
+      <div className = "doingList">
+        { cardNodes }
+      </div>
+    );
+  }
+});
+
+const DoneList = React.createClass({
+  render: function() {
+    const cardNodes = this.props.data.map(function(card, index) {
+      if(card.status === 'Done') {
+        return (
+          <Card
+            key = {index}
+            author = {card.createdBy}
+            title = {card.title}
+            status = {card.status}
+            priority = {card.priority}
+            assignedTo = {card.assignedTo}
+            >
+          </Card>
+        );
+      }
+    })
+    return (
+      <div className = "doneList">
+        { cardNodes }
       </div>
     );
   }
@@ -80,6 +132,7 @@ const CardContainer = React.createClass({
       }.bind(this)
     });
   },
+  // make data available in this
   getInitialState: function () {
     return {data: []}
   },
@@ -91,15 +144,34 @@ const CardContainer = React.createClass({
     return (
       <div className="cardContainer">
         <h1>Kanban</h1>
-        <CardList
-          data = { this.state.data }
-        />
+        <div className = "columnTitles">
+          <div className = "toDoContainer">
+            <h2>To Do</h2>
+            <ToDoList
+              data = { this.state.data }
+            />
+          </div>
+          <div className = "doingContainer">
+            <h2>Doing </h2>
+            <DoingList
+              data = { this.state.data }
+            />
+          </div>
+          <div className = "doneContainer">
+            <h2>Done</h2>
+            <DoneList
+              data = { this.state.data }
+            />
+          </div>
+        </div>
+        <br />
+
       </div>
     );
   }
 });
 
 ReactDOM.render(
-  <CardContainer url = "/api/comments" pollInterval = {2000}/>,
+  <CardContainer url = "/api/cards" pollInterval = {2000}/>,
   document.getElementById('app')
 );
