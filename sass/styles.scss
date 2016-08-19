@@ -21,14 +21,16 @@ $large: "only screen and (min-width: 1000px)";
 }
 
 //
-
-
-h1 {
-  font-size: 50px;
+body {
+  font-family: 'Amatic SC', cursive;
 }
 
-.columnTitles {
-  font-size: 30px;
+h1 {
+  font-size: 72px;
+}
+
+.columns {
+  font-size: 40px;
   display: flex;
   flex-flow: row wrap;
   text-align: center;
@@ -37,12 +39,7 @@ h1 {
 .toDoContainer {
   box-sizing: border-box;
   margin: 5px;
-  // display: inline-block;
   border: 1px solid black;
-  // text-align: center;
-  // width: 290px;
-  // float: left;
-  // padding: 5px 15px;
   display: inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
@@ -50,41 +47,40 @@ h1 {
 }
 
 .doingContainer {
-  // display: inline-block;
   box-sizing: border-box;
   margin: 5px;
   border: 1px solid black;
-  // text-align: center;
-  // width: 294px;
-  // float: left;
-  // padding: 5px 15px;
-  // margin: 0px 5px 5px 5px;
   display:inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
 }
 
 .doneContainer {
-  // display: inline-block;
   box-sizing: border-box;
   margin: 5px;
   border: 1px solid black;
-  // text-align: center;
-  // width: 270px;
-  // padding: 5px 15px;
-  // float: right;
   display:inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
-
 }
 
 .card {
-  display:block;
-  border: 1px solid black;
-  width: 50%;
-  text-align: center;
-  font-size: 24px;
-  margin: 0 auto;
-  margin-bottom: 5px;
+  font-family: 'Raleway', sans-serif;
+  // box-sizing: border-box;
+  display:inline-block;
+  width: 200px;
+  height: 125px;
+  // text-align: center;
+  font-size: 14px;
+  padding-top: 25px;
+  margin: 5px;
+  box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
+  // // margin: 0 auto;
+  // // margin: 5px;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
 }

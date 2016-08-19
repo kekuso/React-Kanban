@@ -5,12 +5,13 @@ const Card = React.createClass({
     return { __html: rawMarkup };
   },
   render: function() {
-    var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    var randomColors = ['aqua', 'aquamarine', 'yellow', 'orange', 'orchid', 'palegreen'];
+    var randomColor = randomColors[Math.floor(Math.random()*6)];
     return (
       <div className = "card" style = {{backgroundColor: randomColor}}>
-        <h2 className = "cardTitle">
-          Title: {this.props.title}
-        </h2>
+        <div className = "cardTitle">
+          {this.props.title}
+        </div>
         <h3 className = "cardAuthor">
           Author: {this.props.author}
         </h3>
@@ -145,7 +146,7 @@ const CardContainer = React.createClass({
       <div className="cardContainer">
         <h1>Kanban</h1>
         <a className="createCardButton" href="./newCard.html">Create New</a>
-        <div className = "columnTitles">
+        <div className = "columns">
           <div className = "toDoContainer">
             <h2>To Do</h2>
             <ToDoList
@@ -166,7 +167,6 @@ const CardContainer = React.createClass({
           </div>
         </div>
         <br />
-
       </div>
     );
   }
