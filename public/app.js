@@ -4,25 +4,53 @@ const Card = React.createClass({
     const rawMarkup = md.render(this.props.children.toString());
     return { __html: rawMarkup };
   },
+  handleClick: function (author, status, assignedTo) {
+    alert("Author: " + author + "\n" + "Status: " + status + "\n" + "Assigned to: " + assignedTo);
+  },
+  // handleCardSubmit: function (card) {
+  //   $.ajax({
+  //     url: this.props.url,
+  //     dataType: 'json',
+  //     type: 'POST',
+  //     data: card,
+  //     success: function (data) {
+  //       this.setState({data: data});
+  //     }.bind(this),
+  //     error: function(xhr, status, err) {
+  //       console.error(this.props.url, status, err.toString());
+  //     }.bind(this)
+  //   });
+  // },
   render: function() {
     var randomColors = ['aqua', 'aquamarine', 'yellow', 'orange', 'orchid', 'palegreen'];
     var randomColor = randomColors[Math.floor(Math.random()*6)];
+    var priorityColor;
+
+    if(this.props.priority === "low") {
+      priorityColor = "green";
+    }
+    else if (this.props.priority === "Medium") {
+      priorityColor = "yellow";
+    }
+    else if (this.props.priority === "High") {
+      priorityColor = "orange";
+    }
+    else if (this.props.priority === "Blocker") {
+      priorityColor = "red";
+    }
+
     return (
-      <div className = "card" style = {{backgroundColor: randomColor}}>
+      <div
+        className = "card"
+        style = {{backgroundColor: randomColor}}
+        onClick = {this.handleClick
+          .bind(null, this.props.author, this.props.status, this.props.assignedTo)}
+      >
         <div className = "cardTitle">
           {this.props.title}
         </div>
-        <h3 className = "cardAuthor">
-          Author: {this.props.author}
-        </h3>
-        <p className = "cardStatus" style = {{color: 'green'}}>
-          Status: {this.props.status}
-        </p>
-        <p className = "cardPriority" style = {{color: 'red'}}>
-          Priority: {this.props.priority}
-        </p>
-        <p className = "cardAssignedTo">
-          Assigned to: {this.props.assignedTo}
+        <p className = "cardPriority" style = {{color: priorityColor}}>
+          {this.props.priority}
         </p>
         <br />
       </div>
@@ -48,7 +76,9 @@ const ToDoList = React.createClass({
       }
     })
     return (
-      <div className = "toDoList">
+      <div
+        className = "toDoList"
+      >
         { cardNodes }
       </div>
     );
@@ -119,20 +149,6 @@ const CardContainer = React.createClass({
       }.bind(this)
     });
   },
-  handleCardSubmit: function (card) {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: card,
-      success: function (data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
   // make data available in this
   getInitialState: function () {
     return {data: []}
@@ -154,7 +170,7 @@ const CardContainer = React.createClass({
             />
           </div>
           <div className = "doingContainer">
-            <h2>Doing </h2>
+            <h2>Doing</h2>
             <DoingList
               data = { this.state.data }
             />

@@ -43,7 +43,7 @@ h1 {
   display: inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
-
+  background-color: #FDFDF0;
 }
 
 .doingContainer {
@@ -53,6 +53,7 @@ h1 {
   display:inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
+  background-color: #FDFDF0;
 }
 
 .doneContainer {
@@ -62,25 +63,27 @@ h1 {
   display:inline-block;
   text-align: center;
   flex: 1 1 calc(90%/3);
+  background-color: #FDFDF0;
 }
 
 .card {
   font-family: 'Raleway', sans-serif;
-  // box-sizing: border-box;
   display:inline-block;
-  width: 200px;
+  width: 215px;
   height: 125px;
-  // text-align: center;
   font-size: 14px;
-  padding-top: 25px;
+  padding-top: 30px;
   margin: 5px;
   box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
-  // // margin: 0 auto;
-  // // margin: 5px;
+  cursor: pointer;
+}
+
+.card:hover {
+  opacity: 0.75;
 }
 
 .cardTitle {
-  font-size: 16px;
+  font-size: 32px;
   font-weight: bold;
   text-transform: capitalize;
 }

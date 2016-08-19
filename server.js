@@ -43,6 +43,7 @@ app.post('/api/cards', function (req, res) {
     status: 'Queue'
   })
   .then(function (card) {
+    console.log("new Card created.");
     res.json(card);
   })
   .catch(function (err) {
