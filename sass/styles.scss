@@ -29,6 +29,9 @@ h1 {
   font-size: 72px;
 }
 
+h2 {
+  font-size: 48px;
+}
 .columns {
   font-size: 40px;
   display: flex;
@@ -79,11 +82,29 @@ h1 {
 }
 
 .card:hover {
-  opacity: 0.75;
+  // opacity: 0.75;
+  -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+  -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+  box-shadow:10px 10px 7px rgba(0,0,0,.7);
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -o-transform: scale(1.15);
+  position:relative;
+  z-index:5;
 }
 
 .cardTitle {
   font-size: 32px;
   font-weight: bold;
   text-transform: capitalize;
+  margin-bottom: 15px;
+}
+
+.submitButton {
+  cursor: pointer;
+}
+
+a.cancel {
+  color: black;
+  text-decoration: none;
 }

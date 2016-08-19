@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Create New Card</title>
+
+  <link rel = 'stylesheet' type="text/css" href = '/css/styles.css'>
 </head>
 <body>
-  <h1>Create New Kanban Card</h1>
+  <h2>Create New Kanban Card</h2>
   <form action = "/api/cards" method = "POST">
     <div>
       Title
@@ -23,9 +25,14 @@
       Assigned to
       <input type="text" name="assignedTo">
     </div>
-    <button type="submit" class="submitButton">
-      Submit new task
-    </button>
+    <div class = "newCardButtons">
+      <button type="submit" class="submitButton">
+        Submit new task
+      </button>
+      <button><a class = "cancel" href="javascript:history.back()">
+        Cancel
+      </a></button>
+    </div>
   </form>
 </body>
 </html>
