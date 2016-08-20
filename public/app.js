@@ -7,20 +7,6 @@ const Card = React.createClass({
   handleClick: function (author, status, assignedTo) {
     alert("Author: " + author + "\n" + "Status: " + status + "\n" + "Assigned to: " + assignedTo);
   },
-  // handleCardSubmit: function (card) {
-  //   $.ajax({
-  //     url: this.props.url,
-  //     dataType: 'json',
-  //     type: 'POST',
-  //     data: card,
-  //     success: function (data) {
-  //       this.setState({data: data});
-  //     }.bind(this),
-  //     error: function(xhr, status, err) {
-  //       console.error(this.props.url, status, err.toString());
-  //     }.bind(this)
-  //   });
-  // },
   render: function() {
     var randomColors = ['aqua', 'aquamarine', 'yellow', 'orange', 'orchid', 'palegreen'];
     var randomColor = randomColors[Math.floor(Math.random()*6)];
@@ -62,6 +48,7 @@ const ToDoList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'Queue') {
+        // sort cards by priority
         return (
           <Card
             key = {index}
@@ -89,6 +76,7 @@ const DoingList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'In Progress') {
+        // sort cards by priority
         return (
           <Card
             key = {index}
@@ -114,6 +102,8 @@ const DoneList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'Done') {
+        // sort cards by priority
+
         return (
           <Card
             key = {index}
@@ -135,6 +125,43 @@ const DoneList = React.createClass({
   }
 });
 
+const NewCardModal = React.createClass({
+  render: function () {
+    return (
+      <div className="newCardContainer">
+        <h2>Create New Kanban Card</h2>
+        <form action="/api/cards" method="POST">
+          <div>
+            Title
+            <input type="text" name="title" />
+          </div>
+          <div>
+            Priority
+            <input type="text" name="priority" />
+          </div>
+          <div>
+            Created by
+            <input type="text" name="createdBy" />
+          </div>
+          <div>
+            Assigned to
+            <input type="text" name="assignedTo" />
+          </div>
+          <div className="newCardButtons">
+            <button type="submit" className="submitButton">
+              Submit new task
+            </button>
+            <br />
+          </div>
+        </form>
+        <button onClick={this.props.showForm} className="cancel">
+              Cancel
+        </button>
+      </div>
+    )
+  }
+});
+
 const CardContainer = React.createClass({
   loadCardsFromServer: function () {
     $.ajax({
@@ -151,7 +178,10 @@ const CardContainer = React.createClass({
   },
   // make data available in this
   getInitialState: function () {
-    return {data: []}
+    return {data: [], showForm: false}
+  },
+  toggle: function () {
+    this.setState( {showForm: !this.state.showForm})
   },
   componentDidMount: function () {
     this.loadCardsFromServer();
@@ -161,7 +191,15 @@ const CardContainer = React.createClass({
     return (
       <div className="cardContainer">
         <h1>Kanban</h1>
-        <a className="createCardButton" href="./newCard.html">Create New</a>
+        <button onClick= {this.toggle} className="createCardButton">Create New</button>
+        { this.state.showForm ?
+            <div className = "modal-container">
+              <NewCardModal
+                className = "modal"
+                showForm = {this.toggle}/>
+            </div>
+          : null
+        }
         <div className = "columns">
           <div className = "toDoContainer">
             <h2>To Do</h2>
