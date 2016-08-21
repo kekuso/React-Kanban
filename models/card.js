@@ -9,7 +9,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // Card.belongsToMany(User, {through: UserProject});
+        Card.belongsToMany(models.User,
+          {
+            as: 'users',
+            through: 'UserCard',
+            foreignKey: 'card_id'
+          });
       }
     }
   });

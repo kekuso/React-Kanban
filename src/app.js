@@ -1,9 +1,9 @@
 const Card = React.createClass({
-  rawMarkup: function () {
-    let md = new Remarkable();
-    const rawMarkup = md.render(this.props.children.toString());
-    return { __html: rawMarkup };
-  },
+  // rawMarkup: function () {
+  //   let md = new Remarkable();
+  //   const rawMarkup = md.render(this.props.children.toString());
+  //   return { __html: rawMarkup };
+  // },
   handleClick: function (author, status, assignedTo) {
     alert("Author: " + author + "\n" + "Status: " + status + "\n" + "Assigned to: " + assignedTo);
   },
