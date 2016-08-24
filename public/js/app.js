@@ -323,6 +323,32 @@
 	    //setInterval(this.loadCardsFromServer, this.props.pollInterval);
 	  },
 	  render: function render() {
+	    var sortedData = this.state.data.splice(0);
+	    var aPriorityValue;
+	    var bPriorityValue;
+	    sortedData.sort(function (a, b) {
+	      if (a.priority === "low") {
+	        aPriorityValue = 0;
+	      } else if (a.priority === "Medium") {
+	        aPriorityValue = 1;
+	      } else if (a.priority === "High") {
+	        aPriorityValue = 2;
+	      } else if (a.priority === "Blocker") {
+	        aPriorityValue = 3;
+	      }
+
+	      if (b.priority === "low") {
+	        bPriorityValue = 0;
+	      } else if (b.priority === "Medium") {
+	        bPriorityValue = 1;
+	      } else if (b.priority === "High") {
+	        bPriorityValue = 2;
+	      } else if (b.priority === "Blocker") {
+	        bPriorityValue = 3;
+	      }
+
+	      return bPriorityValue - aPriorityValue;
+	    });
 	    return React.createElement(
 	      "div",
 	      { className: "cardContainer" },
@@ -355,7 +381,7 @@
 	            "To Do"
 	          ),
 	          React.createElement(ToDoList, {
-	            data: this.state.data
+	            data: sortedData
 	          })
 	        ),
 	        React.createElement(
@@ -367,7 +393,7 @@
 	            "Doing"
 	          ),
 	          React.createElement(DoingList, {
-	            data: this.state.data
+	            data: sortedData
 	          })
 	        ),
 	        React.createElement(
@@ -379,7 +405,7 @@
 	            "Done"
 	          ),
 	          React.createElement(DoneList, {
-	            data: this.state.data
+	            data: sortedData
 	          })
 	        )
 	      ),

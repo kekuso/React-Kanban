@@ -226,6 +226,38 @@ const CardContainer = React.createClass({
     //setInterval(this.loadCardsFromServer, this.props.pollInterval);
   },
   render: function() {
+    const sortedData = this.state.data.splice(0);
+    var aPriorityValue;
+    var bPriorityValue;
+    sortedData.sort(function (a, b) {
+      if(a.priority === "low") {
+        aPriorityValue = 0;
+      }
+      else if (a.priority === "Medium") {
+        aPriorityValue = 1;
+      }
+      else if (a.priority === "High") {
+        aPriorityValue = 2;
+      }
+      else if (a.priority === "Blocker") {
+        aPriorityValue = 3;
+      }
+
+      if(b.priority === "low") {
+        bPriorityValue = 0;
+      }
+      else if (b.priority === "Medium") {
+        bPriorityValue = 1;
+      }
+      else if (b.priority === "High") {
+        bPriorityValue = 2;
+      }
+      else if (b.priority === "Blocker") {
+        bPriorityValue = 3;
+      }
+
+      return bPriorityValue - aPriorityValue;
+    })
     return (
       <div className="cardContainer">
         <h1>Kanban</h1>
@@ -242,19 +274,19 @@ const CardContainer = React.createClass({
           <div className = "toDoContainer">
             <h2>To Do</h2>
             <ToDoList
-              data = { this.state.data }
+              data = { sortedData }
             />
           </div>
           <div className = "doingContainer">
             <h2>Doing</h2>
             <DoingList
-              data = { this.state.data }
+              data = { sortedData }
             />
           </div>
           <div className = "doneContainer">
             <h2>Done</h2>
             <DoneList
-              data = { this.state.data }
+              data = { sortedData }
             />
           </div>
         </div>
