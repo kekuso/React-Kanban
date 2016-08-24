@@ -1,9 +1,4 @@
 const Card = React.createClass({
-  // rawMarkup: function () {
-  //   let md = new Remarkable();
-  //   const rawMarkup = md.render(this.props.children.toString());
-  //   return { __html: rawMarkup };
-  // },
   handleClick: function (author, status, assignedTo) {
     alert("Author: " + author + "\n" + "Status: " + status + "\n" + "Assigned to: " + assignedTo);
   },
@@ -25,22 +20,65 @@ const Card = React.createClass({
       priorityColor = "red";
     }
 
-    return (
-      <div
-        className = "card"
-        style = {{backgroundColor: randomColor}}
-        onClick = {this.handleClick
-          .bind(null, this.props.author, this.props.status, this.props.assignedTo)}
-      >
-        <div className = "cardTitle">
-          {this.props.title}
+    if(this.props.status === 'Queue') {
+      return (
+        <div
+          className = "card"
+          style = {{backgroundColor: randomColor}}
+          onClick = {this.handleClick
+            .bind(null, this.props.author, this.props.status, this.props.assignedTo)}
+        >
+          <div className = "cardTitle">
+            {this.props.title}
+          </div>
+          <p className = "cardPriority" style = {{color: priorityColor}}>
+            {this.props.priority}
+          </p>
+          <button className="moveButton">Move to In Progress</button>
+          <button className="moveButton">Mark as Done</button>
         </div>
-        <p className = "cardPriority" style = {{color: priorityColor}}>
-          {this.props.priority}
-        </p>
-        <br />
-      </div>
-    );
+      );
+    }
+
+    else if(this.props.status === 'In Progress') {
+      return (
+        <div
+          className = "card"
+          style = {{backgroundColor: randomColor}}
+          onClick = {this.handleClick
+            .bind(null, this.props.author, this.props.status, this.props.assignedTo)}
+        >
+          <div className = "cardTitle">
+            {this.props.title}
+          </div>
+          <p className = "cardPriority" style = {{color: priorityColor}}>
+            {this.props.priority}
+          </p>
+          <button className="moveButton">Move to Queue</button>
+          <button className="moveButton">Mark as Done</button>
+        </div>
+      );
+    }
+
+    else {
+      return (
+        <div
+          className = "card"
+          style = {{backgroundColor: randomColor}}
+          onClick = {this.handleClick
+            .bind(null, this.props.author, this.props.status, this.props.assignedTo)}
+        >
+          <div className = "cardTitle">
+            {this.props.title}
+          </div>
+          <p className = "cardPriority" style = {{color: priorityColor}}>
+            {this.props.priority}
+          </p>
+          <button className="moveButton">Move to Queue</button>
+          <button className="moveButton">Move to In Progress</button>
+        </div>
+      );
+    }
   }
 });
 

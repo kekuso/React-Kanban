@@ -8,7 +8,7 @@ module.exports = {
     var statuses = ['Queue', 'In Progress', 'Done'];
     var names = ['Jack', 'Jill'];
 
-    for(var i = 0; i < 5; i++) {
+    for(var i = 0; i < 2; i++) {
       var fakeTitle = faker.hacker.verb() + ' ' + faker.hacker.noun();
       var priority = priorities[Math.floor(Math.random() * priorities.length)];
       var status = statuses[Math.floor(Math.random() * statuses.length)];

@@ -44,6 +44,7 @@ app.post('/api/cards', function (req, res) {
   })
   .then(function (card) {
     console.log("new Card created.");
+    res.send("Successfully added card.");
   })
   .catch(function (err) {
     console.error(err);
