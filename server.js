@@ -7,6 +7,7 @@ const express = require('express');
 var db = require('./models');
 var Card = db.Card;
 var User = db.User;
+var UserCard = db.UserCard;
 
 var app = express();
 app.set('port', (process.env.PORT || 3000));
@@ -44,10 +45,9 @@ app.post('/api/cards', function (req, res) {
     status: 'Queue'
   })
   .then(function (card) {
-    console.log(Object.getOwnPropertyNames(User).filter(function (p) {
-        return typeof User[p] === 'function';
-      }));
-    // User.addCard(card)
+    console.log("Successfully added card.");
+    res.redirect('/index.html');
+    // User.addCards(card)
     // .then(function (user) {
     //   console.log("Successfully added card.");
     //   res.send("Successfully added card.");
