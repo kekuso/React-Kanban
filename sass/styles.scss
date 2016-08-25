@@ -118,7 +118,7 @@ h2 {
 
 }
 
-a.cancel {
+.cancel {
   color: black;
   text-decoration: none;
   background-color: #4CAF50; /* Green */
@@ -146,21 +146,26 @@ a.cancel {
 //   font-family: 'Raleway', sans-serif;
 // }
 
+.newCardContainer {
+  border: 1px solid black;
+}
+
 .modal-container {
   background-color: white;
   position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
+  bottom: 80px;
+  right: 20px;
+  height: 25%;
+  width: 25%;
 }
 
 .modal {
   font-family: 'Raleway', sans-serif;
   background-color: white;
   position: inherit;
-  width: 50%;
-  left: 50%;
-  top: 50%;
+  // width: 100%;
+  // left: 50%;
+  // top: 50%;
   transform: translate(-50%, -50%);
 }
 

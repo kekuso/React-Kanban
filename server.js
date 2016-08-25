@@ -37,24 +37,36 @@ app.get('/api/cards', function(req, res) {
 });
 
 app.post('/api/cards', function (req, res) {
-  Card.create({
-    title: req.body.title,
-    priority: req.body.priority,
-    createdBy: req.body.createdBy,
-    assignedTo: req.body.assignedTo,
-    status: 'Queue'
+  User.findOne({
+    where: {
+      name: req.body.assignedTo
+    }
   })
-  .then(function (card) {
-    console.log("Successfully added card.");
-    res.redirect('/index.html');
-    // User.addCards(card)
-    // .then(function (user) {
-    //   console.log("Successfully added card.");
-    //   res.send("Successfully added card.");
-    // })
-    // .catch(function(err) {
-    //   console.error(err);
-    // });
+  .then(function(user) {
+    console.log("User found.");
+    return user;
+  }).then(function (user) {
+    Card.create({
+      title: req.body.title,
+      priority: req.body.priority,
+      createdBy: req.body.createdBy,
+      assignedTo: req.body.assignedTo,
+      status: 'Queue'
+    })
+    .then(function (card) {
+      UserCard.create({
+        user_id: 1,
+        card_id: card.id,
+    })
+    .then(function(usercard) {
+      console.log("Successfully added card.");
+      res.redirect('/index.html');
+    })
+    })
+
+  .catch(function (err) {
+    console.error(err);
+  });
   })
   .catch(function (err) {
     console.error(err);

@@ -86,7 +86,6 @@ const ToDoList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'Queue') {
-        // sort cards by priority
         return (
           <Card
             key = {index}
@@ -114,7 +113,6 @@ const DoingList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'In Progress') {
-        // sort cards by priority
         return (
           <Card
             key = {index}
@@ -140,8 +138,6 @@ const DoneList = React.createClass({
   render: function() {
     const cardNodes = this.props.data.map(function(card, index) {
       if(card.status === 'Done') {
-        // sort cards by priority
-
         return (
           <Card
             key = {index}
@@ -193,7 +189,7 @@ const NewCardModal = React.createClass({
           </div>
         </form>
         <button onClick={this.props.showForm} className="cancel">
-              Cancel
+          Cancel
         </button>
       </div>
     )
@@ -226,6 +222,7 @@ const CardContainer = React.createClass({
     //setInterval(this.loadCardsFromServer, this.props.pollInterval);
   },
   render: function() {
+    // sort cards by priority
     const sortedData = this.state.data.splice(0);
     var aPriorityValue;
     var bPriorityValue;
