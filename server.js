@@ -84,6 +84,37 @@ app.post('/api/cards', function (req, res) {
   })
 });
 
+app.put('/api/cards/:id', function (req, res) {
+  Card.findOne({
+    where: {
+      id: parseInt(req.params.id)
+    }
+  })
+  .then(function (card) {
+    if(card) {
+      return card.updateAttributes({
+        title: req.body.title,
+        priority: req.body.priority,
+        status: req.body.status,
+        assignedTo: req.body.assignedTo,
+        updatedAt: new Date()
+      })
+      .then(function(card) {
+        console.log("Edited card: " + req.params.id)
+        res.redirect("/");
+      })
+      .catch(function(err) {
+        console.error(err);
+      })
+    }
+
+    else {
+      console.log("Unable to find card");
+      res.send("Unable to find card.");
+    }
+  })
+});
+
 app.delete('/api/cards/:id',
   function (req, res) {
     console.log("req.params.id: " + req.params.id);
@@ -91,11 +122,19 @@ app.delete('/api/cards/:id',
       where: {
         id: parseInt(req.params.id)
       }
-    }).then(function (card) {
+    })
+    .then(function(card) {
+      UserCard.destroy({
+        where: {
+          card_id: parseInt(req.params.id)
+        }
+      })
+    })
+    .then(function (card) {
       console.log("Deleted card: " + req.params.id);
       res.redirect("/");
     })
-  })
+  });
 
 var server = app.listen(app.get('port'), function () {
   db.sequelize.sync();
