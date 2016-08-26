@@ -164,7 +164,6 @@
 	  render: function render() {
 	    var cardNodes = this.props.data.map(function (card, index) {
 	      if (card.status === 'Queue') {
-	        // sort cards by priority
 	        return React.createElement(Card, {
 	          key: index,
 	          author: card.createdBy,
@@ -191,7 +190,6 @@
 	  render: function render() {
 	    var cardNodes = this.props.data.map(function (card, index) {
 	      if (card.status === 'In Progress') {
-	        // sort cards by priority
 	        return React.createElement(Card, {
 	          key: index,
 	          author: card.createdBy,
@@ -216,8 +214,6 @@
 	  render: function render() {
 	    var cardNodes = this.props.data.map(function (card, index) {
 	      if (card.status === 'Done') {
-	        // sort cards by priority
-
 	        return React.createElement(Card, {
 	          key: index,
 	          author: card.createdBy,
@@ -323,6 +319,7 @@
 	    //setInterval(this.loadCardsFromServer, this.props.pollInterval);
 	  },
 	  render: function render() {
+	    // sort cards by priority
 	    var sortedData = this.state.data.splice(0);
 	    var aPriorityValue;
 	    var bPriorityValue;

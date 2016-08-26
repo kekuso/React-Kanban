@@ -39,13 +39,17 @@ app.get('/api/cards', function(req, res) {
 app.post('/api/cards', function (req, res) {
   User.findOne({
     where: {
-      name: req.body.assignedTo
+      username: req.body.assignedTo
     }
   })
   .then(function(user) {
-    console.log("User found.");
+    console.log("User id: " + user.id);
     return user;
-  }).then(function (user) {
+  })
+  .catch(function (err) {
+    console.error(err);
+  })
+  .then(function (user) {
     Card.create({
       title: req.body.title,
       priority: req.body.priority,
@@ -53,26 +57,31 @@ app.post('/api/cards', function (req, res) {
       assignedTo: req.body.assignedTo,
       status: 'Queue'
     })
-    .then(function (card) {
-      UserCard.create({
-        user_id: 1,
-        card_id: card.id,
-    })
-    .then(function(usercard) {
-      console.log("Successfully added card.");
-      res.redirect('/index.html');
-    })
-    })
-
-  .catch(function (err) {
-    console.error(err);
-  });
+  .then(function(card) {
+    console.log("Successfully created card: " + card.id);
+    console.log("User: " + user.id);
+    return card;
   })
   .catch(function (err) {
     console.error(err);
-  });
-
-
+  })
+  .then(function(card) {
+    UserCard.create({
+      user_id: user.id,
+      card_id: card.id,
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+    .then(function(userCard) {
+      console.log("Successfully created usercard");
+      res.redirect("/");
+    })
+    .catch(function(err) {
+      console.error(err);
+    })
+  })
+  })
 });
 
 var server = app.listen(app.get('port'), function () {
