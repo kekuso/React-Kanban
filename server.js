@@ -84,6 +84,19 @@ app.post('/api/cards', function (req, res) {
   })
 });
 
+app.delete('/api/cards/:id',
+  function (req, res) {
+    console.log("req.params.id: " + req.params.id);
+    Card.destroy({
+      where: {
+        id: parseInt(req.params.id)
+      }
+    }).then(function (card) {
+      console.log("Deleted card: " + req.params.id);
+      res.redirect("/");
+    })
+  })
+
 var server = app.listen(app.get('port'), function () {
   db.sequelize.sync();
   console.log("Server listening on port %s", server.address().port);
